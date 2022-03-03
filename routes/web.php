@@ -17,4 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/hello/{user}', fn(string $user)=>"Hello, {$user}");
+
+Route::get('/info', fn()=>"info page");
+
+Route::get('/news', fn()=>"news");
+
+Route::get('/news/{id}', fn(int $id)=>"news with id:{$id}");
+
+
 
