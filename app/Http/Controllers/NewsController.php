@@ -20,4 +20,15 @@ class NewsController extends Controller
             'news' => $this->getNews($id)
         ]);
     }
+    public function welcome()
+    {    
+        $news=[];
+        for($i=0; $i<3; $i++){
+            $news[] = $this->getNews(mt_rand(1,10));
+        }
+        return view('welcome_page', [
+            'newsList' => $news
+        ]);
+    }
+
 }
