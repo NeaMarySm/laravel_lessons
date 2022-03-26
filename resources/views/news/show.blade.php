@@ -1,5 +1,7 @@
 @extends('layouts.main')
-
+@section('title')
+    @parent - {{$news['title']}}
+@endsection
 @section('header')
 <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
@@ -10,7 +12,7 @@
 
 @section('content')
 <div class="news">
-        <p>Category: <em> {{$news['category']['name']}} </em> </p>
+        <p>Category:  <a href="{{route('categories.show', ['id' => $news['category']['id']])}}">{{$news['category']['name']}}</a>  </p>
         <img src=" {{$news['image']}} ">
         <br>
         <p>Author: <em> {{$news['author']}} </em></p>

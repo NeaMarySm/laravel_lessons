@@ -3,6 +3,6 @@
       <p class="float-end mb-1">
         <a href="#">Вверх</a>
       </p>
-      <p class="mb-0">Новостной агрегатор. Все права защищены {{date('Y')}}</p>
+      <p class="mb-0">Новостной агрегатор NewsGB. Все права защищены {{date('Y')}}</p>
     </div>
   </footer>
