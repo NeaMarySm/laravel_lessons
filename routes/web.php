@@ -22,9 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/welcome', [WelcomeController::class, 'index'])
+Route::get('/welcome', [NewsController::class, 'welcome'])
     ->name('welcome');
-
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news');
 Route::get('/news/{id}', [NewsController::class, 'show'])
