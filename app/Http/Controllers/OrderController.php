@@ -38,6 +38,7 @@ class OrderController extends Controller
         $data = json_encode($request->except('_token'));
         
         file_put_contents('test-data/order.json', $data);
+
     }
 
     /**

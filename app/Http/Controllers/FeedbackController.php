@@ -41,7 +41,8 @@ class FeedbackController extends Controller
             ]
             );
         
-            dd($request->only('username', 'feedback-text'));
+        $data = $request->only('username', 'feedback-text');
+        return $data;
     }
 
     /**
