@@ -19,13 +19,13 @@
       <div class="card shadow-sm card-stretch"> 
         <div class="card-body">
             <strong>
-                <a href="{{ route('news.show', ['id' => $news['id']]) }}"> {{ $news['title'] }}  </a> 
+                <a href="{{ route('news.show', ['id' => $news->id]) }}"> {{ $news->title }}  </a> 
               </strong>
-              <img src=" {{$news['image']}} " width="250" height="250">
-          <p class="card-text">{!!$news['description'] !!}</p>
+              <img src=" {{$news->image}} " width="250" height="250">
+          <p class="card-text">{!!$news->description !!}</p>
           <div class="d-flex justify-content-between align-items-center card-end">
             <div class="btn-group">
-              <a href="{{ route('news.show', ['id' => $news['id']]) }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+              <a href="{{ route('news.show', ['id' => $news->id]) }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
             </div>
           </div>
         </div>

@@ -31,7 +31,7 @@ Route::get('/news/{id}', [NewsController::class, 'show'])
     ->name('news.show');
 Route::get('/categories', [CategoryController::class, 'index'])
     ->name('categories');
-Route::get('/categories/{id}', [CategoryController::class, 'show'])
+Route::get('/categories/{id}', [NewsController::class, 'showByCategory'])
     ->where('id', '\d+')
     ->name('categories.show');
 Route::resource('/feedback', FeedbackController::class)

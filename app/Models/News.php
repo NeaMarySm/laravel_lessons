@@ -18,10 +18,32 @@ class News extends Model
             ->join('categories', 'news.category_id', '=', 'categories.id')
             ->select('news.*', 'categories.title as categoryTitle')
             ->where([
-                ['news.status', '=', 'ACTIVE'],
-                ['news.id', '>', '4']
+                ['news.status', '=', 'ACTIVE']
             ])
-            ->orWhere('news.title', 'like', '%'.request()->get('q').'%')
+            ->get()->toArray();
+    }
+
+    public function getNewsById(int $id):mixed
+    {
+        return DB::table($this->table)
+            ->join('categories', 'news.category_id', '=', 'categories.id')
+            ->select('news.*', 'categories.title as categoryTitle')
+            ->where([
+                ['news.status', '=', 'ACTIVE'],
+                ['news.id', '=', $id]
+            ])
+            ->get()->first();
+            
+    }    
+    public function getNewsByCategoryId(int $category_id):mixed
+    {
+        return DB::table($this->table)
+            ->join('categories', 'news.category_id', '=', 'categories.id')
+            ->select('news.*', 'categories.title as categoryTitle')
+            ->where([
+                ['news.status', '=', 'ACTIVE'],
+                ['news.category_id', '=', $category_id]
+            ])
             ->get()->toArray();
     }
 }

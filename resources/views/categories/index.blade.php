@@ -19,8 +19,9 @@
     @foreach ($categoryList as $category)
 
     <h3>
-    <a href="{{route('categories.show', ['id' => $category['id']])}}"> {{$category['name']}}</a>
+    <a href="{{route('categories.show', ['id' => $category->id])}}"> {{$category->title}}</a>
     </h3>
+    <p>{!! $category->description !!}</p>
 
     @endforeach
 @endsection
