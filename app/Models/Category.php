@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Category extends Model
 {
@@ -12,16 +14,22 @@ class Category extends Model
 
     protected $table = 'categories';
 
-    public function getCategories():array
+    protected $fillable = [
+        'title',
+        'description'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean'
+    ];
+
+    public function scopeActive($query)
     {
-        return DB::table($this->table)
-            ->select(["id", "title", "description"])
-            ->get()->toArray();
+        return $query->where('is_active', true);
     }
 
-    public function getCategoryById(int $id):mixed
+    public function news(): hasMany 
     {
-        return DB::table($this->table)->find($id);
-        
+        return $this->hasMany(News::class, 'category_id', 'id');
     }
 }

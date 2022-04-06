@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
 class News extends Model
@@ -12,38 +13,18 @@ class News extends Model
 
     protected $table = 'news';
 
-    public function getNews():array
+    protected $fillable = [
+        'title',
+        'category_id',
+        'author',
+        'status',
+        'image',
+        'description'
+    ];
+
+    public function category(): BelongsTo
     {
-        return DB::table($this->table)
-            ->join('categories', 'news.category_id', '=', 'categories.id')
-            ->select('news.*', 'categories.title as categoryTitle')
-            ->where([
-                ['news.status', '=', 'ACTIVE']
-            ])
-            ->get()->toArray();
+        return $this->belongsTo(Category::class);
     }
 
-    public function getNewsById(int $id):mixed
-    {
-        return DB::table($this->table)
-            ->join('categories', 'news.category_id', '=', 'categories.id')
-            ->select('news.*', 'categories.title as categoryTitle')
-            ->where([
-                ['news.status', '=', 'ACTIVE'],
-                ['news.id', '=', $id]
-            ])
-            ->get()->first();
-            
-    }    
-    public function getNewsByCategoryId(int $category_id):mixed
-    {
-        return DB::table($this->table)
-            ->join('categories', 'news.category_id', '=', 'categories.id')
-            ->select('news.*', 'categories.title as categoryTitle')
-            ->where([
-                ['news.status', '=', 'ACTIVE'],
-                ['news.category_id', '=', $category_id]
-            ])
-            ->get()->toArray();
-    }
 }

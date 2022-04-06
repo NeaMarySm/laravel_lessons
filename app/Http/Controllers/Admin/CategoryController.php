@@ -15,10 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = app(Category::class);
 
         return view('admin.categories.index', [
-            'categories' => $category->getCategories()
+            'categories' => Category::active()->withCount('news')->paginate(5)
         ]);
     }
 
@@ -40,7 +39,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only(['title', 'description']);
+        $category = Category::create($data);
+
+        if($category){
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Запись успешно добавлена');
+        }
+
+        return back()
+            ->with('error', 'Не удалось добавть запись');
     }
 
     /**
@@ -57,24 +65,34 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        return view('admin.categories.edit');
+        return view('admin.categories.edit', [
+            'category' => $category
+        ]); 
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $status = $category->fill($request->only('title', 'description'))->save();
+
+        if($status){
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Запись успешно обновлена');
+        }
+
+        return back()
+            ->with('error', 'Не удалось обновить запись');
     }
 
     /**

@@ -9,12 +9,13 @@
       </div>
     </div>
 </div>
-
+@include('inc.messages')
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
       <tr>
         <th>#ID</th>
+        <th>Кол-во новостей</th>
         <th>Заголовок</th>
         <th>Описание</th>
         <th>Опции</th>
@@ -24,6 +25,7 @@
       @forelse ($categories as $category)
           <tr>
             <td>{{$category->id}}</td>
+            <td>{{$category->news_count}}</td>
             <td>{{$category->title}}</td>
             <td>{{$category->description}}</td>
             <td>
@@ -36,5 +38,6 @@
       @endforelse
     </tbody>
   </table>
+  {{ $categories->links()}}
 </div>
 @endsection

@@ -14,7 +14,8 @@
     </div>
 </div>
 <div class="raw">
-    <form action="{{route('admin.news.store')}}" method="post">
+    @include('inc.messages')
+    <form action="{{route('admin.categories.store')}}" method="post">
         @csrf
         <div class="form-group">
             <label for="title">Наименование</label>
