@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -9,37 +11,29 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = app(News::class)->getNews();
         return view('news.index', [
-            'newsList' => $news
+            'newsList' => News::with('category')->paginate(9)
         ]);
     }
-    public function show(int $id)
+    public function show($id)
     {
-        $news = app(News::class)->getNewsById($id);
-        //dd($news);
         return view('news.show', [
-            'news' => $news
+            'news' => News::with('category')->find($id),
+            
         ]);
     }
     public function welcome()
-    {    
-        $news = app(News::class);
-        $newsList=[];
-        for($i=0; $i<3; $i++){
-            $newsList[] = $news->getNewsById(mt_rand(1,10));
-        }
+    {   
         return view('welcome_page', [
-            'newsList' => $newsList
+            'newsList' => News::with('category')->get()->random(3)
         ]);
     }
 
     public function showByCategory(int $category_id)
     {
-        $news = app(News::class);
-        $newsByCategory = $news->getNewsByCategoryId($category_id);
 
-        return view('news.index', ['newsList' => $newsByCategory]);
+        return view('news.index', [
+            'newsList' => News::byCategory($category_id)->with('category')->paginate(9)
+        ]);
     }
-
 }

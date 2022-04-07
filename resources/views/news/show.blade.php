@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="news">
-        <p>Category:  <a href="{{route('categories.show', ['id' => $news->category_id])}}">{{$news->categoryTitle}}</a>  </p>
+        <p>Category:  <a href="{{route('categories.show', ['id' => $news->category_id])}}">{{$news->category->title}}</a>  </p>
         <img src=" {{$news->image}} ">
         <br>
         <p>Author: <em> {{$news->author}} </em></p>

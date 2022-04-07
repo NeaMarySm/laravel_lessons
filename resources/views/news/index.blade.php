@@ -22,7 +22,8 @@
         <div class="card shadow-sm card-stretch">
             <img src=" {{$news->image}} ">
           <div class="card-body">
-            
+            <a href="{{route('categories.show', ['id' => $news->category_id])}}"> {{ $news->category->title }}  </a> 
+            <br>
             <strong>
                 <a href="{{ route('news.show', ['id' => $news->id]) }}"> {{ $news->title }}  </a> 
             </strong>
@@ -41,6 +42,7 @@
     @empty
         <p>Новостей нет</p>
     @endforelse
+    {{ $newsList->links() }}
 @endsection
 
 

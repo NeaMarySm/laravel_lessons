@@ -9,8 +9,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = app(Category::class)->getCategories();
-        return view('categories.index', ['categoryList' => $categories]);
+        return view('categories.index', [
+            'categoryList' => Category::active()->with('news')->get()
+        ]);
     }
 
   
