@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -41,8 +42,13 @@ class FeedbackController extends Controller
             ]
             );
         
-        $data = $request->only('username', 'feedback-text');
-        return $data;
+        $feedback = Feedback::create($request->only('username','email', 'feedback-text'));
+        
+        if($feedback){
+            return back()->with('success', 'Ваш отзыв успешно отправлен');
+        }
+
+        return back()->with('error', 'Отзыв не отправлен');
     }
 
     /**

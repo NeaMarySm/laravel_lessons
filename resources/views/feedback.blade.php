@@ -16,20 +16,29 @@
 @endsection
 
 @section('content')
+<div class="raw">
+  @include('inc.messages')
     <form action="{{route('feedback.store')}}" method="post">
         @csrf
         <div class="form-group">
             <label for="username">Имя пользователя</label>
             <br>
-            <input type="text" name="username">
+            <input type="text" name="username" value="{{old('username')}}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <br>
+          <input type="email" name="email" value="{{old('email')}}">
         </div>
         <div class="form-group">
             <label for="feedback-text">Ваш отзыв</label>
-            <textarea name="feedback-text" id="feedback-text" cols="60" rows="10"></textarea>
+            <textarea name="feedback-text" id="feedback-text" cols="60" rows="10">{{old('feedback-text')}}</textarea>
         </div>
         <br>
         <br>
         <button type="submit" class="btn btn-success">Отправить отзыв</button>
     </form>
+</div>
+    
 
 @endsection
