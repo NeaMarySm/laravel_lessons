@@ -18,6 +18,11 @@
         <p>Author: <em> {{$news->author}} </em></p>
         <p>Status: <em> {{$news->status}} </em></p>
         <p>{!!$news->description!!} </p>
+        <p>Source: <br>
+        @foreach ($news->source as $source)
+                <em> {{$source->name}} </em><br>
+        @endforeach
+        </p>
 </div>
 @endsection
 

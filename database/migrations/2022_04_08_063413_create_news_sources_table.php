@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('data_sources', function (Blueprint $table) {
-            $table->id();
-            $table->string('url', 255);
-            $table->text('description')->nullable();
-            $table->timestamps();
+        Schema::create('news_sources', function (Blueprint $table) {
+            $table->foreignId('news_id')
+				->constrained('news')
+                ->cascadeOnUpdate()
+			    ->cascadeOnDelete();
+            $table->foreignId('source_id')
+				->constrained('sources')
+                ->cascadeOnUpdate()
+			    ->cascadeOnDelete();
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_sources');
+        Schema::dropIfExists('news_sources');
     }
 };

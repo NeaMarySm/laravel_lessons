@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Source;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class SourceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('order');
+        return view('source.index',[
+            'sources' => Source::paginate(5)
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('source.create');
     }
 
     /**
@@ -34,11 +37,15 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $data = json_encode($request->except('_token'));
-        
-        file_put_contents('test-data/order.json', $data);
+        $source = Source::create($request->only(['name', 'url']));
 
+        if($source){
+            return redirect()->route('source')
+                ->with('success', 'Данные успешно выгружены');
+        }
+
+        return back()
+            ->with('error', 'Ошибка выгрузки');   
     }
 
     /**
@@ -55,24 +62,35 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Source $source
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Source $source)
     {
-        //
+        return view('source.edit', [
+            'source' => $source
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Source $source
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Source $source)
     {
-        //
+        $data = $request->only(['name', 'url']);
+
+        $status = $source->fill($data)->save();
+
+        if($status){
+            return redirect()->route('source')
+                ->with('success', 'Данные отредактированы');
+        }
+        return back()
+            ->with('error', 'Ошибка редактирования');
     }
 
     /**

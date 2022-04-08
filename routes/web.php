@@ -6,8 +6,7 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\SourceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,8 +35,8 @@ Route::get('/categories/{id}', [NewsController::class, 'showByCategory'])
     ->name('categories.show');
 Route::resource('/feedback', FeedbackController::class)
     ->name('index', 'feedback');
-Route::resource('/order', OrderController::class)
-    ->name('index', 'order');
+Route::resource('/source', SourceController::class)
+    ->name('index', 'source');
 
 
 // Admin Routes

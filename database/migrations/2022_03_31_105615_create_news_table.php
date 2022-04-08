@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')
+				->constrained('categories')
+			    ->cascadeOnDelete();
             $table->string('title', 255);
             $table->string('author')->nullable();
             $table->enum('status', ['ACTIVE', 'DRAFT', 'BLOCKED'])->default('DRAFT');
