@@ -5,7 +5,7 @@
     <h1 class="h2">Список источников</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group me-2">
-        <a href="{{route('source.create')}}" type="button" class="btn btn-sm btn-outline-secondary">Добавить источник</a>
+        <a href="{{route('admin.sources.create')}}" type="button" class="btn btn-sm btn-outline-secondary">Добавить источник</a>
       </div>
     </div>
 </div>
@@ -26,7 +26,7 @@
             <td>{{$source->name}}</td>
             <td>{{$source->url}}</td>
             <td>
-              <a href="{{route('source.edit', ['source' => $source])}}">Ред.</a>
+              <a href="{{route('admin.sources.edit', ['source' => $source])}}">Ред.</a>
               <a href="javascript:;" style="color:red">Удл.</a>
             </td>
           </tr>

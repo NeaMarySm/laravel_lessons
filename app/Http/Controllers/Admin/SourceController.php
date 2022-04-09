@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\sources\CreateRequest;
+use App\Http\Requests\sources\EditRequest;
 use App\Models\Source;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,7 @@ class SourceController extends Controller
      */
     public function index()
     {
-        return view('source.index',[
+        return view('admin.sources.index',[
             'sources' => Source::paginate(5)
         ]);
     }
@@ -26,7 +29,7 @@ class SourceController extends Controller
      */
     public function create()
     {
-        return view('source.create');
+        return view('admin.sources.create');
     }
 
     /**
@@ -35,12 +38,12 @@ class SourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $source = Source::create($request->only(['name', 'url']));
+        $source = Source::create($request->validated());
 
         if($source){
-            return redirect()->route('source')
+            return redirect()->route('admin.sources.index')
                 ->with('success', 'Данные успешно выгружены');
         }
 
@@ -67,7 +70,7 @@ class SourceController extends Controller
      */
     public function edit(Source $source)
     {
-        return view('source.edit', [
+        return view('admin.sources.edit', [
             'source' => $source
         ]);
     }
@@ -79,14 +82,14 @@ class SourceController extends Controller
      * @param  Source $source
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Source $source)
+    public function update(EditRequest $request, Source $source)
     {
-        $data = $request->only(['name', 'url']);
+        $data = $request->validated();
 
         $status = $source->fill($data)->save();
 
         if($status){
-            return redirect()->route('source')
+            return redirect()->route('admin.sources.index')
                 ->with('success', 'Данные отредактированы');
         }
         return back()

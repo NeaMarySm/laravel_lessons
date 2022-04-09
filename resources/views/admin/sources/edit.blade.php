@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="raw">
-    <form action="{{route('source.update', ['source'=>$source])}}" method="post">
+    <form action="{{route('admin.sources.update', ['source'=>$source])}}" method="post">
         @csrf
         @method('put')
         <div class="form-group">

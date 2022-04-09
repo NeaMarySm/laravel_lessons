@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="raw">
-    <form action="{{route('source.store')}}" method="post">
+    <form action="{{route('admin.sources.store')}}" method="post">
         @csrf
         <div class="form-group">
             <label for="name">Источник</label>
