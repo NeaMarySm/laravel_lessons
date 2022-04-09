@@ -44,11 +44,11 @@ class SourceController extends Controller
 
         if($source){
             return redirect()->route('admin.sources.index')
-                ->with('success', 'Данные успешно выгружены');
+                ->with('success', __('messages.admin.sources.create.success'));
         }
 
         return back()
-            ->with('error', 'Ошибка выгрузки');   
+            ->with('error', __('messages.admin.sources.create.fail'));   
     }
 
     /**
@@ -90,10 +90,10 @@ class SourceController extends Controller
 
         if($status){
             return redirect()->route('admin.sources.index')
-                ->with('success', 'Данные отредактированы');
+                ->with('success', __('messages.admin.sources.update.success'));
         }
         return back()
-            ->with('error', 'Ошибка редактирования');
+            ->with('error', __('messages.admin.sources.update.fail'));
     }
 
     /**

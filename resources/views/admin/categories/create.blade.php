@@ -19,11 +19,17 @@
         @csrf
         <div class="form-group">
             <label for="title">Наименование</label>
-            <input type="text" class="form-control" name="title" id="title">
+            <input type="text" class="form-control @if($errors->has('title')) alert-danger @endif" name="title" id="title">
+            @error('title')
+                <span style="color: red;">{{$message}}</span>
+            @enderror
         </div>   
         <div class="form-group">
             <label for="description">Описание</label>
-            <textarea class="form-control" name="description" id="description"></textarea>
+            <textarea class="form-control @if($errors->has('description')) alert-danger @endif" name="description" id="description"></textarea>
+            @error('title')
+                <span style="color: red;">{{$message}}</span>
+            @enderror
         </div> 
         <br>
         <br>

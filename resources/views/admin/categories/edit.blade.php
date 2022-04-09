@@ -22,10 +22,16 @@
         <div class="form-group">
             <label for="title">Наименование</label>
             <input type="text" class="form-control" name="title" id="title" value="{{$category->title}}">
+            @error('title')
+                <span style="color: red;">{{$message}}</span>
+            @enderror
         </div>   
         <div class="form-group">
             <label for="description">Описание</label>
             <textarea class="form-control" name="description" id="description">{!! $category->description !!}</textarea>
+            @error('description')
+                <span style="color: red;">{{$message}}</span>
+            @enderror
         </div> 
         <br>
         <br>

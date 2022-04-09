@@ -23,16 +23,25 @@
         <div class="form-group">
             <label for="username">Имя пользователя</label>
             <br>
-            <input type="text" name="username" value="{{old('username')}}">
+            <input type="text" class="form-control @if($errors->has('username')) alert-danger @endif" name="username" value="{{old('username')}}">
+            @error('username')
+              <span style="color: red;">{{$message}}</span>
+            @enderror
         </div>
         <div class="form-group">
           <label for="email">Email</label>
           <br>
-          <input type="email" name="email" value="{{old('email')}}">
+          <input type="email" class="form-control @if($errors->has('email')) alert-danger @endif" name="email" value="{{old('email')}}">
+          @error('email')
+              <span style="color: red;">{{$message}}</span>
+          @enderror
         </div>
         <div class="form-group">
             <label for="feedback-text">Ваш отзыв</label>
-            <textarea name="feedback-text" id="feedback-text" cols="60" rows="10">{{old('feedback-text')}}</textarea>
+            <textarea name="feedback-text" class="form-control @if($errors->has('feedback-text')) alert-danger @endif" id="feedback-text" cols="60" rows="10">{{old('feedback-text')}}</textarea>
+            @error('feedback-text')
+              <span style="color: red;">{{$message}}</span>
+            @enderror
         </div>
         <br>
         <br>
