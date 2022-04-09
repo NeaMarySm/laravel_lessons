@@ -20,7 +20,10 @@
         @method('put')
         <div class="form-group">
             <label for="title">Наименование</label>
-            <input type="text" class="form-control" name="title" id="title" value="{{$news->title}}">
+            <input type="text" class="form-control @if($errors->has('title')) alert-danger @endif" name="title" id="title" value="{{$news->title}}">
+            @error('title')
+                <span style="color: red;">{{$message}}</span>
+            @enderror
         </div> 
         <div class="form-group">
             <label for="category_id">Категория</label>
@@ -34,7 +37,10 @@
         </div> 
         <div class="form-group">
             <label for="author">Автор</label>
-            <input type="text" class="form-control" name="author" id="author" value="{{$news->author}}">
+            <input type="text" class="form-control @if($errors->has('author')) alert-danger @endif" name="author" id="author" value="{{$news->author}}">
+            @error('author')
+                <span style="color: red;">{{$message}}</span>
+            @enderror
         </div>  
         <div class="form-group">
             <label for="author">Статус</label>

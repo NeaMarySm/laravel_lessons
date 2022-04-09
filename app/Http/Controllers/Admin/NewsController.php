@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\news\CreateRequest;
+use App\Http\Requests\news\EditRequest;
 use App\Models\Category;
 use App\Models\News;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class NewsController extends Controller
 {
@@ -39,27 +43,16 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $request->validate(
-            [
-                'title' => ['required', 'string']
-            ]);
-        $news = News::create($request->only([
-            'title',
-            'category_id',
-            'author',
-            'status',
-            'image',
-            'description'
-        ]));
+        $news = News::create($request->validated());
 
         if($news){
             return redirect()->route('admin.news.index')
-                ->with('success', 'Новость успешно добавлена');
+                ->with('success', __('messages.admin.news.create.success'));
         }
         return back()
-            ->with('error', 'Ошибка добавления');
+            ->with('error', __('messages.admin.news.create.fail'));
     }
 
     /**
@@ -94,35 +87,32 @@ class NewsController extends Controller
      * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(EditRequest $request, News $news)
     {
-        $data = $request->only([
-            'title',
-            'category_id',
-            'author',
-            'status',
-            'image',
-            'description'
-        ]);
-
-        $status = $news->fill($data)->save();
+        $status = $news->fill($request->validated())->save();
 
         if($status){
             return redirect()->route('admin.news.index')
-                ->with('success', 'Новость успешно отредактирована');
+                ->with('success', trans('messages.admin.news.update.success'));
         }
         return back()
-            ->with('error', 'Ошибка редактирования');
+            ->with('error', __('messages.admin.news.update.fail'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  News $news
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy($news): JsonResponse
     {
-        //
+        try {
+            $news->delete();
+            return response()->json(['status' => 'ok']);
+        } catch (\Exception $e) {
+            Log::error("News wasn't deleted");
+            return response()->json(['status' => 'error'], 400);
+        }
     }
 }
