@@ -40,7 +40,7 @@
             @enderror
         </div>  
         <div class="form-group">
-            <label for="author">Статус</label>
+            <label for="status">Статус</label>
             <select class="form-control" name="status" id="status">
                 <option @if(old('status')==='DRAFT') selected @endif>DRAFT</option>
                 <option @if(old('status')==='ACTIVE') selected @endif>ACTIVE</option>

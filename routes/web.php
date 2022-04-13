@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Account\IndexController as AccountIndexController;
+use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -39,8 +40,9 @@ Route::resource('/feedback', FeedbackController::class)
     ->name('index', 'feedback');
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::group(['prefix' => 'account', 'as' => 'account'], function(){
+    Route::group(['prefix' => 'account', 'as' => 'account.'], function(){
         Route::get('/', AccountIndexController::class)->name('index');
+        Route::resource('profile', ProfileController::class);
         // logout
         Route::get('logout', function(){
             Auth::logout();
