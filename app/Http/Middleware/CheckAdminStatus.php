@@ -17,7 +17,7 @@ class CheckAdminStatus
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->is_admin){
+        if(!Auth::user()->is_admin){
             abort(404);
         }
         return $next($request);

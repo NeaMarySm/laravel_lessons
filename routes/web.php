@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\SourceController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NewsController;
@@ -53,6 +54,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin.check'], function(){
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
+        Route::resource('users', AdminUserController::class);
         Route::get('/', AdminIndexController::class)->name('index');
         Route::resource('sources', SourceController::class);
 });
