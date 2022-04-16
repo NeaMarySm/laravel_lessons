@@ -15,7 +15,6 @@ class SocialService implements Social
         $user = User::where('email', $socialUser->getEmail())->first();
 
         if($user){
-            //$user->email = $socialUser->getEmail();
             $user->name = $socialUser->getName();
             $user->avatar = $socialUser->getAvatar();
 

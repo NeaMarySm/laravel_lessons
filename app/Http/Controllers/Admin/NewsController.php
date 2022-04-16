@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\Parser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\news\CreateRequest;
 use App\Http\Requests\news\EditRequest;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\Source;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;

@@ -59,8 +59,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('users', AdminUserController::class);
         Route::get('/', AdminIndexController::class)
             ->name('index');
-        Route::get('/parser', ParserController::class)
-            ->name('parser');
+        Route::resource('parser', ParserController::class);
         Route::resource('sources', SourceController::class);
     });
 });

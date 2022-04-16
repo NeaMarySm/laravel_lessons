@@ -30,10 +30,10 @@ class ParserService implements Contract
     public function getNews(): array
     {
         $xml = Parser::load($this->url);
-        return $xml->parse([
+        $sourceParsed = $xml->parse([
             'title' => [
                 'uses' => 'channel.title'
-            ],
+             ],
 
             'link' => [
                 'uses' => 'channel.link'
@@ -44,9 +44,13 @@ class ParserService implements Contract
             'image' => [
                 'uses' => 'channel.image.url'
             ],
+        ]);
+        $newsParsed = $xml->parse([
             'news' => [
-                'uses' => 'channel.item[title, link, guid, description, pubDate]'
+                'uses' => 'channel.item[title,link,guid,description,pubDate]'
             ],
         ]);
+        
+        return $newsParsed;
     }
 }

@@ -31,7 +31,7 @@
         </div>
         <br>
         <br>
-        <button type="submit" class="btn btn-success">Выгрузить</button>
+        <button type="submit" class="btn btn-success">Добавить</button>
     </form>
 </div>
 

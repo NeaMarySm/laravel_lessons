@@ -17,6 +17,7 @@
         <th>#ID</th>
         <th>Источник</th>
         <th>Url</th>
+        <th colspan="3">Действия</th>
       </tr>
     </thead>
     <tbody>
@@ -26,12 +27,22 @@
             <td>{{$source->name}}</td>
             <td>{{$source->url}}</td>
             <td>
+              <form action="{{route('admin.parser.store')}}" method="post">
+                @csrf
+                <input type="hidden" value="{{$source->url}}" name="url" id="url">
+                <input type="hidden" value="{{$source->name}}" name="name" id="name">
+                <button type="submit"> Выгрузить новости</button>
+              </form>
+            </td>
+            <td>
               <a href="{{route('admin.sources.edit', ['source' => $source])}}">Ред.</a>
+            </td>
+            <td>
               <a href="javascript:;" style="color:red">Удл.</a>
             </td>
           </tr>
       @empty
-          <tr><td colspan="4">Записей нет</td></tr>
+          <tr><td colspan="6">Записей нет</td></tr>
       @endforelse
     </tbody>
   </table>
