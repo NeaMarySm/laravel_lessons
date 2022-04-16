@@ -16,6 +16,11 @@
     <div class="user-profile">
         <p>Имя пользователя:  {{$user->name}} </p>
         <br>
+        @if ($user->avatar)
+            <img src="{{$user->avatar}}" alt="avatar" style="width:250px">
+        @endif
+
+       
         <p>Email: {{$user->email}}</p>
         <br>
         <p>Дата создания:{{$user->created_at}}</p>
