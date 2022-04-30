@@ -20,7 +20,7 @@
     @forelse ($newsList as $news)
     <div class="col">
         <div class="card shadow-sm card-stretch">
-            <img src=" {{$news->image}} ">
+            <img src=" {{Storage::disk('public')->url($news->image)}} ">
           <div class="card-body">
             <a href="{{route('categories.show', ['id' => $news->category_id])}}"> {{ $news->category->title }}  </a> 
             <br>

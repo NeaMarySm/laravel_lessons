@@ -24,11 +24,11 @@ class EditRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' =>          ['required', 'string', 'min:3', 'max:55'],
+            'title' =>          ['required', 'string', 'min:3', 'max:128'],
             'category_id' =>    ['required', 'integer'],
             'status' =>         ['required', 'string', 'min:5', 'max:7'],
             'author' =>         ['required', 'string'],
-            'image' =>          ['nullable', 'image', 'mimes:jpg, png, jpeg '],
+            'image' =>          ['nullable'],
             'description' =>    ['nullable', 'string']
         ];
     }

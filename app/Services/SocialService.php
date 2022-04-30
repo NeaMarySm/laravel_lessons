@@ -23,7 +23,7 @@ class SocialService implements Social
                 return route('account.index');
             }
 
-            throw new \Exeption("User wasn't authicated. Make another attempt later");
+            throw new \Exception("User wasn't authicated. Make another attempt later");
 
         } else {
             return route('register');

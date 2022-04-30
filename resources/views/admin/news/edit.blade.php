@@ -15,7 +15,7 @@
     @include('inc.messages')
     <form action="{{route('admin.news.update', [
         'news' => $news
-    ])}}" method="post">
+    ])}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="form-group">
@@ -65,3 +65,23 @@
 </div>
 
 @endsection
+
+@push('js')
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
+<script type="text/javascript">
+    var options = {
+    filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+    filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+    filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+    filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+  };
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+    
+@endpush

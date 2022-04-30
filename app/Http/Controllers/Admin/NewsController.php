@@ -9,6 +9,7 @@ use App\Http\Requests\news\EditRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
+use App\Services\UploadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -42,7 +43,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\news\CreateRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
@@ -91,7 +92,12 @@ class NewsController extends Controller
      */
     public function update(EditRequest $request, News $news)
     {
-        $status = $news->fill($request->validated())->save();
+        $validated = $request->validated();
+		if($request->hasFile('image')) {
+			$service = app(UploadService::class);
+			$validated['image'] = $service->uploadFile($request->file('image'));
+		}
+		$status = $news->fill($validated)->save();
 
         if($status){
             return redirect()->route('admin.news.index')
@@ -107,7 +113,8 @@ class NewsController extends Controller
      * @param  News $news
      * @return JsonResponse
      */
-    public function destroy($news): JsonResponse
+
+    public function destroy(News $news): JsonResponse
     {
         try {
             $news->delete();

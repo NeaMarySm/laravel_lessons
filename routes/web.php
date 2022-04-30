@@ -14,6 +14,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use \UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,10 @@ Route::group(['middleware' => 'guest'], function(){
     Route::get('/auth/{network}/callback', [SocialController::class, 'callback'])
         ->where('network', '\w+')
         ->name('auth.callback');
+});
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    Lfm::routes();
 });
 
 

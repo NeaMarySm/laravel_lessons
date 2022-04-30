@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\sources\CreateRequest;
 use App\Http\Requests\sources\EditRequest;
 use App\Models\Source;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SourceController extends Controller
 {
@@ -99,11 +101,17 @@ class SourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Source $source
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Source $source):JsonResponse
     {
-        //
+        try {
+            $source->delete();
+            return response()->json(['status' => 'ok']);
+        } catch (\Exception $e) {
+            Log::error("Source wasn't deleted");
+            return response()->json(['status' => 'error'], 400);
+        }
     }
 }

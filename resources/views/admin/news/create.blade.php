@@ -13,7 +13,7 @@
 </div>
 <div class="raw">
     @include('inc.messages')
-    <form action="{{route('admin.news.store')}}" method="post">
+    <form action="{{route('admin.news.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="title">Наименование</label>
@@ -62,3 +62,19 @@
 </div>
 
 @endsection
+
+@push('js')
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    var options = {
+        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+      };
+
+    CKEDITOR.replace('description', options);
+</script>
+
+    
+@endpush

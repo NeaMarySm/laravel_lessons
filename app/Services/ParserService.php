@@ -5,21 +5,43 @@ namespace App\Services;
 
 use Orchestra\Parser\Xml\Facade as Parser;
 use App\Contracts\Parser as Contract;
+use App\Models\News;
+use App\Models\Source;
+use Illuminate\Support\Facades\Storage;
 
 class ParserService implements Contract
 {
 
-    protected string $url;
+    protected Source $source;
      /**
      * setUrl
      *
-     * @param  string $url
+     * @param  Source $source
      * @return ParserService
      */
-    public function setUrl(string $url): self
+    public function setSource(Source $source): self
     {
-        $this->url = $url;
+        $this->source = $source;
         return $this;
+    }
+
+    public function addNewsToDB(array $newsList): array
+    {
+        $newsLoaded=[];
+        foreach($newsList as $news){
+            foreach($news as $item){
+                $newsLoaded[] = News::create([
+                    'title' => $item['title'],
+                    'description' => $item['description'],
+                    'category_id' => 5,
+                    'author' => $this->source->name,
+                    'status' => 'DRAFT'
+                ]);
+                
+            }
+        }
+
+        return $newsLoaded;
     }
     
     /**
@@ -27,14 +49,13 @@ class ParserService implements Contract
      *
      * @return array
      */
-    public function getNews(): array
+    public function saveNews():void
     {
-        $xml = Parser::load($this->url);
-        $sourceParsed = $xml->parse([
+        $xml = Parser::load($this->source->url);
+        $data = $xml->parse([
             'title' => [
                 'uses' => 'channel.title'
              ],
-
             'link' => [
                 'uses' => 'channel.link'
             ],
@@ -44,13 +65,24 @@ class ParserService implements Contract
             'image' => [
                 'uses' => 'channel.image.url'
             ],
-        ]);
-        $newsParsed = $xml->parse([
             'news' => [
                 'uses' => 'channel.item[title,link,guid,description,pubDate]'
             ],
         ]);
+
+        $newsList = $xml->parse([
+            'news' => [
+                'uses' => 'channel.item[title,link,guid,description,pubDate]'
+            ]
+        ]);
         
-        return $newsParsed;
+    //     $json = json_encode($data);
+    //     $e = explode('/', $this->source->url);
+    //     $fileName = end($e);
+    //    Storage::append('news/'.$fileName, $json);
+       
+        $this->addNewsToDB($newsList);
+
+          
     }
 }
